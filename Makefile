@@ -1,5 +1,5 @@
 
-OBJECTS=main.o cc.o cpp.o Haskell.o haskell.o python.o ruby.o perl.o
+OBJECTS=main.o cc.o cpp.o Haskell.o haskell.o python.o ruby.o perl.o lua.o
 
 PERL_CORE=$(shell perl -MConfig -e 'print $$Config{archlib}')
 
@@ -11,7 +11,7 @@ clean:
 	rm *.o *.hi Haskell_stub.h poly
 
 poly:	$(OBJECTS)
-	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl $(shell pkg-config --libs python3 ruby) -no-hs-main $(OBJECTS) -o poly
+	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl $(shell pkg-config --libs python3 ruby lua5.1) -no-hs-main $(OBJECTS) -o poly
 
 main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h
 	gcc -c main.c -o main.o
@@ -38,3 +38,6 @@ ruby.o:	ruby.c ruby.h
 
 perl.o:	perl.c perl.h
 	gcc -I$(PERL_CORE)/CORE -c perl.c -o perl.o
+
+lua.o:	lua.c lua.h
+	gcc $(shell pkg-config --cflags lua5.1) -c lua.c -o lua.o
