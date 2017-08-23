@@ -1,0 +1,6 @@
+*~
+poly
+*.pyc
+*.o
+*.hi
+Haskell_stub.h
