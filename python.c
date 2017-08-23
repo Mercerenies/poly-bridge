@@ -1,6 +1,15 @@
 
+#include <Python.h>
 #include "python.h"
 #include "assert.h"
+
+static wchar_t* program;
+
+void python_initialize(int* argc, char*** argv) {
+  program = Py_DecodeLocale(argv[0][0], NULL);
+  Py_SetProgramName(program);
+  Py_Initialize();
+}
 
 void python_print(int n) {
 
@@ -28,4 +37,9 @@ void python_print(int n) {
   Py_DECREF(func);
   Py_DECREF(module);
 
+}
+
+void python_release() {
+  Py_Finalize();
+  PyMem_RawFree(program);
 }

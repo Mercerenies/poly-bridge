@@ -2,9 +2,8 @@
 #ifndef PERL_H
 #define PERL_H
 
-#include <EXTERN.h>
-#include <perl.h>
-
+void perl_initialize(int* argc, char*** argv);
 void perl_print(int n);
+void perl_release();
 
 #endif // PERL_H

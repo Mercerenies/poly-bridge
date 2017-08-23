@@ -1,5 +1,12 @@
 
+#include <EXTERN.h>
+#include <perl.h>
 #include "perl.h"
+
+void perl_initialize(int* argc, char*** argv) {
+  void* null = NULL;
+  PERL_SYS_INIT3(argc, argv, null);
+}
 
 void perl_print(int n) {
   char* argv[] = {"", "./perl.pl"};
@@ -22,4 +29,8 @@ void perl_print(int n) {
 
   perl_destruct(my_perl);
   perl_free(my_perl);
+}
+
+void perl_release() {
+  PERL_SYS_TERM();
 }

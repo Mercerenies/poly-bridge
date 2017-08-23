@@ -14,7 +14,7 @@ poly:	$(OBJECTS)
 	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl $(shell pkg-config --libs python3 ruby) -no-hs-main $(OBJECTS) -o poly
 
 main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h
-	gcc -I$(PERL_CORE)/CORE -I/usr/lib/ghc/include $(shell pkg-config --cflags python3 ruby) -c main.c -o main.o
+	gcc -c main.c -o main.o
 
 cc.o: cc.c cc.h
 	gcc -c cc.c -o cc.o
