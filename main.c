@@ -5,7 +5,7 @@
 #include "ruby.h"
 #undef ASSUME
 #include "perl.h"
-#include "Haskell_stub.h"
+#include "haskell.h"
 
 int main(int argc, char** argv) {
   void* null = NULL; // Bypass a compiler warning
@@ -15,16 +15,16 @@ int main(int argc, char** argv) {
   ruby_init();
   ruby_script(argv[0]);
   PERL_SYS_INIT3(&argc, &argv, null);
-  hs_init(&argc, &argv);
+  haskell_init(&argc, &argv);
 
   c_print(1);
   cpp_print(2);
-  haskellPrint(3);
+  haskell_print(3);
   python_print(4);
   ruby_print(5);
   perl_print(6);
 
-  hs_exit();
+  haskell_free();
   PERL_SYS_TERM();
   int exit_code = ruby_cleanup(0);
   Py_Finalize();
