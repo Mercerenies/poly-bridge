@@ -4,3 +4,4 @@ poly
 *.o
 *.hi
 Haskell_stub.h
+*.a

@@ -6,6 +6,7 @@
 #include "perl.h"
 #include "haskell.h"
 #include "lua.h"
+#include "rust.h"
 
 int main(int argc, char** argv) {
   python_initialize(&argc, &argv);
@@ -21,6 +22,7 @@ int main(int argc, char** argv) {
   ruby_print(5);
   perl_print(6);
   lua_print(7);
+  rust_print(8);
 
   lua_release();
   haskell_release();

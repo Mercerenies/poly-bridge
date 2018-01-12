@@ -10,10 +10,10 @@ all:	poly
 clean:
 	rm *.o *.hi Haskell_stub.h poly
 
-poly:	$(OBJECTS)
-	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl $(shell pkg-config --libs python3 ruby lua5.1) -no-hs-main $(OBJECTS) -o poly
+poly:	$(OBJECTS) librust.a
+	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl $(shell pkg-config --libs python3 ruby lua5.1) -no-hs-main $(OBJECTS) librust.a -o poly
 
-main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h
+main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h rust.h
 	gcc -c main.c -o main.o
 
 cc.o: cc.c cc.h
@@ -41,3 +41,6 @@ perl.o:	perl.c perl.h
 
 lua.o:	lua.c lua.h
 	gcc $(shell pkg-config --cflags lua5.1) -c lua.c -o lua.o
+
+librust.a:	rust.rs rust.h
+	rustc rust.rs
