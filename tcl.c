@@ -11,7 +11,7 @@ void tcl_initialize(int* argc, char*** argv) {
 
 void tcl_print(int n) {
 
-  char fnname[] = "tcl_print";
+  char fnname[] = "tclPrint";
 
   int objc = 2;
   Tcl_Obj** objv = malloc(sizeof(Tcl_Obj*) * 2);

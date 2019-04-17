@@ -1,4 +1,4 @@
 
-proc tcl_print {n} {
+proc tclPrint {n} {
     puts "$n. Printing from Tcl"
 }
