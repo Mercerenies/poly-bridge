@@ -1,5 +1,5 @@
 
-OBJECTS=main.o cc.o cpp.o Haskell.o haskell.o python.o ruby.o perl.o lua.o
+OBJECTS=main.o cc.o cpp.o Haskell.o haskell.o python.o ruby.o perl.o lua.o tcl.o
 
 PERL_CORE=$(shell perl -MConfig -e 'print $$Config{archlib}')
 
@@ -11,9 +11,9 @@ clean:
 	rm *.o *.hi Haskell_stub.h poly
 
 poly:	$(OBJECTS) librust.a
-	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl $(shell pkg-config --libs python3 ruby lua5.1) -no-hs-main $(OBJECTS) librust.a -o poly
+	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl -ltcl8.6 $(shell pkg-config --libs python3 ruby lua5.1) -no-hs-main $(OBJECTS) librust.a -o poly
 
-main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h rust.h
+main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h rust.h tcl.h
 	gcc -c main.c -o main.o
 
 cc.o: cc.c cc.h
@@ -44,3 +44,6 @@ lua.o:	lua.c lua.h
 
 librust.a:	rust.rs rust.h
 	rustc rust.rs
+
+tcl.o:	tcl.c tcl.h
+	gcc -I/usr/include/tcl8.6 -c tcl.c -o tcl.o

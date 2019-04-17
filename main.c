@@ -7,6 +7,7 @@
 #include "haskell.h"
 #include "lua.h"
 #include "rust.h"
+#include "tcl.h"
 
 int main(int argc, char** argv) {
   python_initialize(&argc, &argv);
@@ -14,6 +15,7 @@ int main(int argc, char** argv) {
   perl_initialize(&argc, &argv);
   haskell_initialize(&argc, &argv);
   lua_initialize(&argc, &argv);
+  tcl_initialize(&argc, &argv);
 
   c_print(1);
   cpp_print(2);
@@ -23,7 +25,9 @@ int main(int argc, char** argv) {
   perl_print(6);
   lua_print(7);
   rust_print(8);
+  tcl_print(9);
 
+  tcl_release();
   lua_release();
   haskell_release();
   perl_release();
