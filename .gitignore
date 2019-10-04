@@ -5,3 +5,4 @@ poly
 *.hi
 Haskell_stub.h
 *.a
+*.class
