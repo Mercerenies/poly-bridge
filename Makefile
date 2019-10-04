@@ -2,6 +2,8 @@
 OBJECTS=main.o cc.o cpp.o Haskell.o haskell.o python.o ruby.o perl.o lua.o tcl.o
 
 PERL_CORE=$(shell perl -MConfig -e 'print $$Config{archlib}')
+LUA_CFLAGS=$(shell pkg-config --silence-errors --cflags lua5.1 || pkg-config --cflags lua5.2)
+LUA_LIBS=$(shell pkg-config --silence-errors --libs lua5.1 || pkg-config --libs lua5.2)
 
 .PHONY:	all clean
 
@@ -11,7 +13,7 @@ clean:
 	rm *.o *.hi Haskell_stub.h poly
 
 poly:	$(OBJECTS) librust.a
-	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl -ltcl8.6 $(shell pkg-config --libs python3 ruby lua5.1) -no-hs-main $(OBJECTS) librust.a -o poly
+	ghc -L$(PERL_CORE)/CORE -lstdc++ -lperl -ltcl8.6 $(shell pkg-config --libs python3 ruby) $(LUA_LIBS) -no-hs-main $(OBJECTS) librust.a -o poly
 
 main.o:	main.c cc.h cpp.h Haskell_stub.h python.h ruby.h haskell.h rust.h tcl.h
 	gcc -c main.c -o main.o
@@ -40,7 +42,7 @@ perl.o:	perl.c perl.h
 	gcc -I$(PERL_CORE)/CORE -c perl.c -o perl.o
 
 lua.o:	lua.c lua.h
-	gcc $(shell pkg-config --cflags lua5.1) -c lua.c -o lua.o
+	gcc $(LUA_CFLAGS) -c lua.c -o lua.o
 
 librust.a:	rust.rs rust.h
 	rustc rust.rs

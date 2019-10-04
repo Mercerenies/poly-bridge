@@ -9,7 +9,11 @@
 lua_State* L;
 
 void lua_initialize(int* argc, char*** argv) {
+#if LUA_VERSION_NUM > 501
+  L = luaL_newstate();
+#else
   L = (lua_State*)lua_open();
+#endif
   luaopen_base(L);
   luaopen_table(L);
   luaopen_string(L);
